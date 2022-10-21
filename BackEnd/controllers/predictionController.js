@@ -60,7 +60,6 @@ async function updateUsersPoints(){
     let count = 0
     
     for (let i = 0; i < users.length; i++){
-        console.log("ora")
         count = 0
         for (let j = 0; j < users[i].predictions.length; j++){
             let prediction = await Predictions.findById(users[i].predictions[j].toString())
