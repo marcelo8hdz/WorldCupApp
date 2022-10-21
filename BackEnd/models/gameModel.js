@@ -2,14 +2,13 @@ import mongoose from "mongoose";
 
 const gameSchema = new mongoose.Schema(
 	{
-	gameID: {
+	gameId: {
 		type: String, 
 		required: true
 	}, 
-	teams: {
-		type: [mongoose.SchemaTypes.ObjectId],
-		ref: "Teams"
-	},
+	teams: [{
+		type: mongoose.SchemaTypes.ObjectId, ref: "Teams"
+	}],
 	winner: {
 		type: mongoose.SchemaTypes.ObjectId, 
 		ref: "Teams",

@@ -9,12 +9,11 @@ const userSchema = new mongoose.Schema(
 		unique: true
 	},
 	pictureURL: {type: String},
-	predictions: {//Funcionaria crear un arreglo para cada tipo de prediccion?
-		//un arreglo con tipo y referencia es asi??
-		type: [mongoose.SchemaTypes.ObjectId], 
+	predictions: [{
+		type: mongoose.SchemaTypes.ObjectId, 
 		ref: "Predictions",
 		required: false
-	}, 
+	}], 
 	points: {type: Number, default: 0},
 	admin: {type: Boolean, default: 0}
 	},

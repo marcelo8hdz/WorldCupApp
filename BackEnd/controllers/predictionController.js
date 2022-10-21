@@ -1,45 +1,59 @@
 import Predictions from "../models/predictionModel.js";
 import {Router} from "express";
+import userRoutes from "./userController.js";
 
 const predictionRoutes = Router();
 
 predictionRoutes.route('/new').post((req, res) => {
-	const newTeam = new Teams(req.body)
-    newTeam.save()
+	const newPrediction = new Predictions(req.body)
+    newPrediction.save()
         .then(success => res.json(success))
         .catch(err => res.status(400).json('Error! ' + err))
 })
 
 predictionRoutes.route('/').get((req, res) => {
     // using .find() without a parameter will match on all team instances
-	Teams.find({})
-        .then(allTeams => res.json(allTeams))
+	Predictions.find({})
+        .then(allPredictions => res.json(allPredictions))
         .catch(err => res.status(400).json('Error! ' + err))
 })
 
 predictionRoutes.route('/delete/:id').delete((req, res) => {
 	
-    Teams.deleteOne({ _id: req.params.id })
-        .then(success => res.json('Success! Team deleted.'))
+    Predictions.deleteOne({ _id: req.params.id })
+        .then(success => res.json('Success! Prediction deleted.'))
         .catch(err => res.status(400).json('Error! ' + err))
 })
 
 predictionRoutes.route('/:id').get((req, res) => {
-	Teams.find({_id: req.params.id}, (err, team) => {
+	Predictions.find({_id: req.params.id}, (err, prediction) => {
         if (err) res.status(500).send(error)
-        res.status(200).json(team);
+        res.status(200).json(prediction);
     });
 })
 
-predictionRoutes.route('/update/:id').post((req,res) => {
+predictionRoutes.route('/update/:id').post((req, res) => {
     
-    Teams.findByIdAndUpdate(req.params.id, req.body, {new: true},
-        (err, team) => {
+    Predictions.findByIdAndUpdate(req.params.id, req.body, {new: true},
+        (err, prediction) => {
             if (err)  res.status(500).json(err);
-            res.status(500).json(team);
+            res.status(500).json(prediction);
         }
     )    
 })
+
+
+predictionRoutes.route('/updatemany/:game/:winner').post((req, res) => {
+    
+    Predictions.updateMany(req.params, req.body, {new: true},
+        (err, prediction) => {
+            if (err)  res.status(500).json(err);
+            res.status(500).json(prediction);
+        }
+    )
+})
+
+
 
 
 export default predictionRoutes;

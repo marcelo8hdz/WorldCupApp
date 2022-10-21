@@ -44,14 +44,16 @@ gameRoutes.route('/:id').get((req, res) => {
     });
 })
 
+
+
 gameRoutes.route('/update/:id').post((req,res) => {
-    
+   
     Games.findByIdAndUpdate(req.params.id, req.body, {new: true},
         (err, game) => {
             if (err)  res.status(500).json(err);
             res.status(500).json(game);
         }
-    )    
+    )
 })
 
 export default gameRoutes;

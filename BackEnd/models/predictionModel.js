@@ -20,8 +20,8 @@ const predictionSchema = new mongoose.Schema(
         // immutable: true  //Funciona como hash pero se tendria que crear otra instancia si el usuario cambia de prediccion
     },
 	userId: {type: mongoose.SchemaTypes.ObjectId},
-	madness: {type: Boolean} //vale la pena crear otro schema en lugar de esta variable??
-	//hash: {} falta agregar el hash
+	madness: {type: Boolean},
+    points: {type: Number, default: 0}
 	  
 	},
 	{timestamps: true}

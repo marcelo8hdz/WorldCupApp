@@ -1,7 +1,3 @@
-import Teams from "./controllers/teamModel";
-import Games from "./controllers/gameModel";
-
-
 //FALTAN LAS FECHAS EXACTAS
 
 //CREATE ALL GROUPS (as matches) AND TEAMS
@@ -144,16 +140,16 @@ const groupH = await Games.create({
 
 
 //CREATE ALL INDIVIDUAL GROUP MATCHES
-const groupArr = [groupA, groupB, groupC, groupD, groupE, groupF, groupG, groupH];
 for (let i = 0; i < groupArr.length; i++) {
     
     for (let j = 0; j < groupArr[i].teams.length; j++){
         for(let k = j + 1; k < groupArr[i].teams.length; k++){
             Games.create({
-                gameId: (groupArr[i].gameId + groupArr[i].teams[j].name + groupArr.teams[k].name),
+                gameId: (groupArr[i].gameId + groupArr[i].teams[j].name + groupArr[i].teams[k].name),
                 teams: [groupArr[i].teams[j], groupArr[i].teams[k]],
                 date: Date.now()
             });
         }
     }    
 }
+
