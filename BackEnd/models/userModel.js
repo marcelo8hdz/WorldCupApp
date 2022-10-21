@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema(
 		required: false
 	}, 
 	points: {type: Number, default: 0},
+	admin: {type: Boolean, default: 0}
 	},
 	{timestamps: true}
 );
