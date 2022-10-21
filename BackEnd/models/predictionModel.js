@@ -28,4 +28,6 @@ const predictionSchema = new mongoose.Schema(
 );
 
 
+
+
 export default mongoose.model("Predictions", predictionSchema);

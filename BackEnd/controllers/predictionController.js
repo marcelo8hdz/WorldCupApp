@@ -44,6 +44,7 @@ predictionRoutes.route('/update/:id').post((req, res) => {
 
 
 predictionRoutes.route('/updatemany/:game/:winner').post((req, res) => {
+    updateUsersPoints()
     
     Predictions.updateMany(req.params, req.body, {new: true},
         (err, prediction) => {
@@ -52,6 +53,24 @@ predictionRoutes.route('/updatemany/:game/:winner').post((req, res) => {
         }
     )
 })
+
+import Users from "../models/userModel.js"
+async function updateUsersPoints(){
+    let users = await Users.find({})
+    let count = 0
+    
+    for (let i = 0; i < users.length; i++){
+        console.log("ora")
+        count = 0
+        for (let j = 0; j < users[i].predictions.length; j++){
+            let prediction = await Predictions.findById(users[i].predictions[j].toString())
+            count += prediction.points
+        }
+        users[i].points = count
+        users[i].save()
+    }
+    
+}
 
 
 
