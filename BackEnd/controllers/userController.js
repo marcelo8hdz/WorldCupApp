@@ -33,7 +33,14 @@ userRoutes.route('/rank').get((req, res) => {
 
 userRoutes.route('/:id').get((req, res) => {
 	Users.find({_id: req.params.id}, (err, user) => {
-        if (err) res.status(500).send(error)
+        if (err) res.status(500).send(err)
+        res.status(200).json(user);
+    });
+})
+
+userRoutes.route('/getUserByEmail/:mail').get((req, res) => {
+	Users.find({mail: req.params.mail}, (err, user) => {
+        if (err) res.status(500).json(err)
         res.status(200).json(user);
     });
 })
