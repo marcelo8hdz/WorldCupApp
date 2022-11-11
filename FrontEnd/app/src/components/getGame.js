@@ -51,7 +51,7 @@ const GetGame = ({game, api, user, madness, points}) => {
 				</header>
 				{teams.map(team =>
 					<div key = {team._id}>
-						<img src= {"%PUBLIC_URL%" + team.pic.substr(2)} alt= "team image" width="30" height="20" />
+						<img src= {process.env.PUBLIC_URL + team.pic.substr(2)} alt= "team image" width="30" height="20" />
 						<p> {team.name} </p>
 					</div>
 
