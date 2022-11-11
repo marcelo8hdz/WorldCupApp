@@ -43,7 +43,7 @@ const GetGame = ({game, api, user, madness, points}) => {
 		console.log("e");
 	};
 	return (
-		<div class= 'btn' onClick={() => setPopup(true)}>
+		<div className= 'btn' onClick={() => setPopup(true)}>
 			<div>
 				<header>
 					<h2>{game.gameId} </h2>
@@ -51,7 +51,7 @@ const GetGame = ({game, api, user, madness, points}) => {
 				</header>
 				{teams.map(team =>
 					<div key = {team._id}>
-						<img src= {team.pic} alt= "team image" width="30" height="20" />
+						<img src= {"%PUBLIC_URL%" + team.pic.substr(2)} alt= "team image" width="30" height="20" />
 						<p> {team.name} </p>
 					</div>
 
@@ -63,18 +63,18 @@ const GetGame = ({game, api, user, madness, points}) => {
 								<h3> Set Winner </h3>
 									{teams.map(team =>
 									<div>
-										<label for={"winner"}> {team.name} </label>
-										<input type = "radio" Name= "winner" id = {"winner"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, winner: team._id}))}}/>
+										<label htmlFor={"winner"} > {team.name} </label>
+										<input type = "radio" name= "winner" id = {"winner"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, winner: team._id}))}}/>
 									</div>
 									)}
 								<h3> Set Looser </h3>
 									{teams.map(team =>
 									<div>
-										<label for={"looser"}> {team.name} </label>
-										<input type = "radio" Name= "looser" id = {"looser"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, looser: team._id}))}}/>
+										<label htmlFor={"looser"}> {team.name} </label>
+										<input type = "radio" name= "looser" id = {"looser"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, looser: team._id}))}}/>
 									</div>
 									)}
-								<button class= 'btnSmall' onClick={() => submitPrediction()}> Submit </button>
+								<button className= 'btnSmall' onClick={() => submitPrediction()}> Submit </button>
 							</div>
 					</ClickAwayListener>
 				)}
