@@ -24,7 +24,7 @@ export default function RankedUsers(props){
 		})
 	}, [])
     return( 
-        <div class= 'btn' onClick={() => setPopup(true)}>
+        <div className= 'btn' onClick={() => setPopup(true)}>
             <div>
             <header> 
                 <h2> User Rankings</h2> 

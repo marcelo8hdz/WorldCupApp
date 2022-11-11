@@ -1,8 +1,7 @@
 import GetGame from './getGame'
 import { useState, useEffect } from 'react'
 
-export default function GetGames(props){
-    const api = props.api
+export default function GetGames({api, user}){
     const [games, getGames] = useState([])
 
     useEffect(() =>{
@@ -14,7 +13,7 @@ export default function GetGames(props){
     return(
         <div>
             {games.map( game => (
-                <GetGame game = {game} api = {api}/>
+                <GetGame game = {game} api = {api} user = {user} madness = {0} points = {3} />
             ))}
         </div>
     )

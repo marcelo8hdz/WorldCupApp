@@ -1,9 +1,17 @@
 import { useEffect, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
 
-const SetGame = ({game, api, user}) => {
+const SetGame = ({game, setGame, api, user}) => {
   	const [popup, setPopup] = useState(false)
 	const [teams, setTeams] = useState([])
+	const [updatedGame, setUpdatedGame] = useState(game)
+	const [date, setDate] = useState(game.date.substr(0, 16))
+
+	function submitNewGame(){
+		api.post(`/games/update/${game._id}`, updatedGame).then(res => {
+			setGame(res.data[0])
+		})
+	};
 
 	useEffect(() =>{
 		let arr = []
@@ -14,20 +22,21 @@ const SetGame = ({game, api, user}) => {
 			
 		})
 		setTeams(arr)
+
 	}, [])
+	
 	return (
-		<div class= 'btn' onClick={() => setPopup(true)}>
+		<div className= 'btn' onClick={() => setPopup(true)}>
 			<div>
 				<header>
 					<h2>{game.gameId} </h2>
-					<p>{game.date}</p>
+					<p>{game.date.substr(0,16)}</p>
 				</header>
 				{teams.map(team =>
 					<div key = {team._id}>
 						<img src= {team.pic} alt= "team image" width="30" height="20" />
 						<p> {team.name} </p>
 					</div>
-
 				)}
 				</div>
 				{popup && (
@@ -37,22 +46,28 @@ const SetGame = ({game, api, user}) => {
 									{teams.map(team =>
 									<div>
 										<label for={"winner"}> {team.name} </label>
-										<input type = "radio" Name= "winner" ID = {"winner"} value={team._id}/>
+										{game.winner === team._id ? (
+										<input type = "radio" Name= "winner" id = {"winner"} value={team._id} onChange={() => {setUpdatedGame((prev) =>({...prev, winner: team._id}))}} checked/>) :(
+										<input type = "radio" Name= "winner" id = {"winner"} value={team._id} onChange={() => { setUpdatedGame((prev) =>({...prev, winner: team._id}))}}/>)}
 									</div>
 									)}
 								<h3> Set Looser </h3>
 									{teams.map(team =>
 									<div>
 										<label for={"looser"}> {team.name} </label>
-										<input type = "radio" Name= "Team" ID = {"looser"} value={team._id}/>
+										{game.looser === team._id ? (
+										<input type = "radio" Name= "looser" id = {"looser"} value={team._id} checked onChange={() => { setUpdatedGame((prev) =>({...prev, looser: team._id}))}}/>): (
+										<input type = "radio" Name= "looser" id = {"looser"} value={team._id} onChange={() => { setUpdatedGame((prev) =>({...prev, looser: team._id}))}}/>)}
+										
 									</div>
 									)}
 								<h3> Set Date </h3>
 									<div>
-										<label for={"date"}> Date: </label>
-										<input type = "datetime-local" Name= "Team" ID = {game._id} value={game.date}/>
+										<label for = {"gameDate"}> Date: </label>
+										<input type = "datetime-local" name= "gameDate" id = {"gameDate"} defaultValue ={game.date.substr(0, 16)} onChange = {(newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value}))}}/>
+										{/* (newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value}))} */}
 									</div>
-								<button class= 'btnSmall' onClick={() => console.log("submit")}> Submit </button>
+								<button className= 'btnSmall' onClick={() => submitNewGame()}> Submit </button>
 							</div>
 					</ClickAwayListener>
 				)}

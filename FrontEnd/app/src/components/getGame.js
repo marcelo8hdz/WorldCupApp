@@ -1,9 +1,17 @@
 import { useEffect, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
 
-const GetGame = ({game, api, user}) => {
+const GetGame = ({game, api, user, madness, points}) => {
   	const [popup, setPopup] = useState(false)
 	const [teams, setTeams] = useState([])
+	const [prediction, setPrediction] = useState({
+		game: game._id,
+		winner: {},
+		looser: {},
+		userId: user._id,
+		madness: madness,
+		points: points
+		});
 
 	useEffect(() =>{
 		let arr = []
@@ -15,12 +23,31 @@ const GetGame = ({game, api, user}) => {
 		})
 		setTeams(arr)
 	}, [])
+
+	useEffect(() =>{
+		user.predictions.map(prediction => {
+			api.get(`/predictions/${prediction}`).then(res => {
+				if (res.data[0] != null){
+					if (res.data[0].game === game._id){
+						setPrediction(res.data[0])
+					}
+				}
+				else{
+					// api.post(`/predictions/${prediction}`, PARAMETER)
+				}
+			})
+		})
+	}, [])
+
+	function submitPrediction(){
+		console.log("e");
+	};
 	return (
 		<div class= 'btn' onClick={() => setPopup(true)}>
 			<div>
 				<header>
 					<h2>{game.gameId} </h2>
-					<p>{game.date}</p>
+					<p>{game.date.substr(0,16)}</p>
 				</header>
 				{teams.map(team =>
 					<div key = {team._id}>
@@ -37,17 +64,17 @@ const GetGame = ({game, api, user}) => {
 									{teams.map(team =>
 									<div>
 										<label for={"winner"}> {team.name} </label>
-										<input type = "radio" Name= "winner" ID = {"winner"} value={team._id}/>
+										<input type = "radio" Name= "winner" id = {"winner"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, winner: team._id}))}}/>
 									</div>
 									)}
 								<h3> Set Looser </h3>
 									{teams.map(team =>
 									<div>
 										<label for={"looser"}> {team.name} </label>
-										<input type = "radio" Name= "Team" ID = {"looser"} value={team._id}/>
+										<input type = "radio" Name= "looser" id = {"looser"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, looser: team._id}))}}/>
 									</div>
 									)}
-								<button class= 'btnSmall' onClick={() => console.log("submit")}> Submit </button>
+								<button class= 'btnSmall' onClick={() => submitPrediction()}> Submit </button>
 							</div>
 					</ClickAwayListener>
 				)}

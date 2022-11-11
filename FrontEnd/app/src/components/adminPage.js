@@ -16,7 +16,7 @@ export default function AdminPage(props){
     return(
         <div>
             {games.map( game => (
-                <SetGames game = {game} api = {api} key ={game._id} />
+                <SetGames game = {game} setGame ={setGames} api = {api} key ={game._id} />
             ))}
         </div>
     )
