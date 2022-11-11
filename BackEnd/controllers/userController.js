@@ -31,6 +31,12 @@ userRoutes.route('/rank').get((req, res) => {
         .catch(err => res.status(400).json('Error! ' + err))
 })
 
+userRoutes.route('/rank/top5').get((req, res) => {
+    Users.find({}).sort('-points').limit(5)
+        .then(rankedUsers => res.json(rankedUsers))
+        .catch(err => res.status(400).json('Error! ' + err))
+})
+
 userRoutes.route('/:id').get((req, res) => {
 	Users.find({_id: req.params.id}, (err, user) => {
         if (err) res.status(500).send(err)

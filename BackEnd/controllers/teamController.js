@@ -26,7 +26,7 @@ teamRoutes.route('/delete/:id').delete((req, res) => {
 })
 
 teamRoutes.route('/:id').get((req, res) => {
-	teams.find({_id: req.params.id}, (err, team) => {
+	Teams.find({_id: req.params.id}, (err, team) => {
         if (err) res.status(500).send(error)
         res.status(200).json(team);
     });
