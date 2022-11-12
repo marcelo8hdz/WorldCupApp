@@ -68,13 +68,14 @@ function App() {
 				
 				</div>
 
-				<button className='btnSmall' onClick={() => setAdminPopUp(!adminPopUp)}> AdminPage</button>
-				{user.admin && adminPopUp && (
+				
+				{user.admin && (
 					<div className='container'>
 						<header> 
 							<h1>Admin Page</h1>
 						</header>
-						{user.admin ? (<AdminPage user = {user} api = {api}/>):('')}
+						<button className='btnSmall' onClick={() => setAdminPopUp(!adminPopUp)}> Modify Games</button>
+						{adminPopUp ? (<AdminPage user = {user} api = {api}/>):('')}
 					</div>
 				)}
 			</div>
