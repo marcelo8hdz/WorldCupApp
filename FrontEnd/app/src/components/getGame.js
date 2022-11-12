@@ -10,8 +10,9 @@ const GetGame = ({game, api, user, madness, points}) => {
 		looser: {},
 		userId: user._id,
 		madness: madness,
-		points: points
-		});
+		points: points,
+		_id: "mock"
+	});
 
 	useEffect(() =>{
 		let arr = []
@@ -25,22 +26,33 @@ const GetGame = ({game, api, user, madness, points}) => {
 	}, [])
 
 	useEffect(() =>{
-		user.predictions.map(prediction => {
-			api.get(`/predictions/${prediction}`).then(res => {
+		user.predictions.map(userPrediction => {
+			api.get(`/predictions/${userPrediction._id}`).then(res => {
 				if (res.data[0] != null){
-					if (res.data[0].game === game._id){
-						setPrediction(res.data[0])
+					if (res.data[0].game === game._id ){
+						if(res.data[0].madness === madness){setPrediction(res.data[0])}
 					}
-				}
-				else{
-					// api.post(`/predictions/${prediction}`, PARAMETER)
 				}
 			})
 		})
 	}, [])
 
 	function submitPrediction(){
-		console.log("e");
+		api.post(`/predictions/update/${prediction._id}`, prediction).then(pred => {
+			console.log(pred)
+			if (pred.data === null){
+				api.post('predictions/new', {
+					"userId": user._id, 
+					"winner": prediction.winner, 
+					"looser": prediction.looser, 
+					"madness": madness, 
+					"points": prediction.points}).then(res => {
+						setPrediction(res.data)
+					})
+			}else{
+				setPrediction(pred.data)
+			}
+		})
 	};
 	return (
 		<div className= 'btn' onClick={() => setPopup(true)}>

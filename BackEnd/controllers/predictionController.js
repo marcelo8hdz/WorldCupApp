@@ -6,9 +6,10 @@ const predictionRoutes = Router();
 
 predictionRoutes.route('/new').post((req, res) => {
 	const newPrediction = new Predictions(req.body)
+    // updateUserPredictions(newPrediction)
     newPrediction.save()
         .then(success => res.json(success))
-        .catch(err => res.status(400).json('Error! ' + err))
+        .catch(err => res.status(400).send('Error! ' + err))
 })
 
 predictionRoutes.route('/').get((req, res) => {
@@ -27,38 +28,42 @@ predictionRoutes.route('/delete/:id').delete((req, res) => {
 
 predictionRoutes.route('/:id').get((req, res) => {
 	Predictions.find({_id: req.params.id}, (err, prediction) => {
-        if (err) res.status(500).send(error)
+        if (err) res.status(500).json(err)
+        res.status(200).json(prediction);
+    });
+})
+
+predictionRoutes.route('/find/:id').get((req, res) => {
+	Predictions.find({_id: req.params.id}, (err, prediction) => {
+        if (err) res.status(200).json([])
         res.status(200).json(prediction);
     });
 })
 
 predictionRoutes.route('/update/:id').post((req, res) => {
-    
     Predictions.findByIdAndUpdate(req.params.id, req.body, {new: true},
         (err, prediction) => {
             if (err)  res.status(500).json(err);
-            res.status(500).json(prediction);
+            res.status(200).json(prediction);
         }
     )    
 })
 
 
 predictionRoutes.route('/updatemany/:game/:winner').post((req, res) => {
-    updateUsersPoints()
-    
     Predictions.updateMany(req.params, req.body, {new: true},
         (err, prediction) => {
             if (err)  res.status(500).json(err);
             res.status(500).json(prediction);
         }
     )
+    updateUsersPoints()
 })
 
 import Users from "../models/userModel.js"
 async function updateUsersPoints(){
     let users = await Users.find({})
     let count = 0
-    
     for (let i = 0; i < users.length; i++){
         count = 0
         for (let j = 0; j < users[i].predictions.length; j++){
@@ -69,6 +74,14 @@ async function updateUsersPoints(){
         users[i].save()
     }
     
+}
+
+async function updateUserPredictions(pred){
+    let user = await Users.find({_id: pred.userId.toString()})
+    let arr = user.predictions
+    arr.push(arr)
+    user.predictions = arr
+    user.save()
 }
 
 

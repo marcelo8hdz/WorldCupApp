@@ -10,7 +10,9 @@ const SetGame = ({game, setGame, api, user}) => {
 	function submitNewGame(){
 		api.post(`/games/update/${game._id}`, updatedGame).then(res => {
 			setGame(res.data[0])
+			api.post(`/predictions/updatemany/${game._id}/${game.winner}`, {"points": 1})
 		})
+		
 	};
 
 	useEffect(() =>{
@@ -45,25 +47,25 @@ const SetGame = ({game, setGame, api, user}) => {
 								<h3> Set Winner </h3>
 									{teams.map(team =>
 									<div>
-										<label for={"winner"}> {team.name} </label>
+										<label htmlFor={"winner"}> {team.name} </label>
 										{game.winner === team._id ? (
-										<input type = "radio" Name= "winner" id = {"winner"} value={team._id} onChange={() => {setUpdatedGame((prev) =>({...prev, winner: team._id}))}} checked/>) :(
-										<input type = "radio" Name= "winner" id = {"winner"} value={team._id} onChange={() => { setUpdatedGame((prev) =>({...prev, winner: team._id}))}}/>)}
+										<input type = "radio" name= "winner" id = {"winner"} value={team._id} onChange={() => {setUpdatedGame((prev) =>({...prev, winner: team._id}))}} checked/>) :(
+										<input type = "radio" name= "winner" id = {"winner"} value={team._id} onChange={() => { setUpdatedGame((prev) =>({...prev, winner: team._id}))}}/>)}
 									</div>
 									)}
 								<h3> Set Looser </h3>
 									{teams.map(team =>
 									<div>
-										<label for={"looser"}> {team.name} </label>
+										<label htmlFor={"looser"}> {team.name} </label>
 										{game.looser === team._id ? (
-										<input type = "radio" Name= "looser" id = {"looser"} value={team._id} checked onChange={() => { setUpdatedGame((prev) =>({...prev, looser: team._id}))}}/>): (
-										<input type = "radio" Name= "looser" id = {"looser"} value={team._id} onChange={() => { setUpdatedGame((prev) =>({...prev, looser: team._id}))}}/>)}
+										<input type = "radio" name= "looser" id = {"looser"} value={team._id} checked onChange={() => { setUpdatedGame((prev) =>({...prev, looser: team._id}))}}/>): (
+										<input type = "radio" name= "looser" id = {"looser"} value={team._id} onChange={() => { setUpdatedGame((prev) =>({...prev, looser: team._id}))}}/>)}
 										
 									</div>
 									)}
 								<h3> Set Date </h3>
 									<div>
-										<label for = {"gameDate"}> Date: </label>
+										<label htmlFor = {"gameDate"}> Date: </label>
 										<input type = "datetime-local" name= "gameDate" id = {"gameDate"} defaultValue ={game.date.substr(0, 16)} onChange = {(newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value}))}}/>
 										{/* (newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value}))} */}
 									</div>
