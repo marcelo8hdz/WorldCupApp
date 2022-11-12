@@ -36,7 +36,7 @@ predictionRoutes.route('/:id').get((req, res) => {
 predictionRoutes.route('/find/:id').get((req, res) => {
 	Predictions.find({_id: req.params.id}, (err, prediction) => {
         if (err) res.status(200).json([])
-        res.status(200).json(prediction);
+        else res.status(200).json(prediction);
     });
 })
 
