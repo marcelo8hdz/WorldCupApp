@@ -30,7 +30,10 @@ const GetGame = ({game, api, user, madness, points}) => {
 			api.get(`/predictions/${userPrediction._id}`).then(res => {
 				if (res.data[0] != null){
 					if (res.data[0].game === game._id ){
-						if(res.data[0].madness === madness){setPrediction(res.data[0])}
+						if(res.data[0].madness === madness){
+							setPrediction(res.data[0])
+							console.log(res.data[0])
+						}
 					}
 				}
 			})
@@ -39,7 +42,9 @@ const GetGame = ({game, api, user, madness, points}) => {
 
 	function submitPrediction(){
 		api.get(`/predictions/find/${prediction._id}`).then( res => {
-			if (res.data == null){
+			console.log(res.data[0])
+			if (res.data[0] != null){
+				console.log("es nulo")
 				api.post(`/predictions/update/${prediction._id}`, {
 					"userId": user._id, 
 					"winner": prediction.winner, 
