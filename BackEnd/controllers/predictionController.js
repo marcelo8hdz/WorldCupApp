@@ -6,7 +6,7 @@ const predictionRoutes = Router();
 
 predictionRoutes.route('/new').post((req, res) => {
 	const newPrediction = new Predictions(req.body)
-    // updateUserPredictions(newPrediction)
+    updateUserPredictions(newPrediction)
     newPrediction.save()
         .then(success => res.json(success))
         .catch(err => res.status(400).send('Error! ' + err))
@@ -77,9 +77,9 @@ async function updateUsersPoints(){
 }
 
 async function updateUserPredictions(pred){
-    let user = await Users.find({_id: pred.userId.toString()})
+    let user = await Users.findById(pred.userId.toString())
     let arr = user.predictions
-    arr.push(arr)
+    arr.push(pred._id.toString())
     user.predictions = arr
     user.save()
 }
