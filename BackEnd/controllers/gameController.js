@@ -47,6 +47,7 @@ gameRoutes.route('/:id').get((req, res) => {
 
 
 gameRoutes.route('/update/:id').post((req,res) => {
+    req.body.date = req.body.date +':00-06:00'
    
     Games.findByIdAndUpdate(req.params.id, req.body, {new: true},
         (err, game) => {

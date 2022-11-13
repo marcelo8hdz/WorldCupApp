@@ -5,6 +5,9 @@ app.listen(PORT,
     console.log(`Successfully served on port: ${PORT}.`)
 );
 
+
+
+//
 // import Users from "./models/userModel.js"
 // import Predictions from "./models/predictionModel.js"
 // async function updateUsersPoints(){

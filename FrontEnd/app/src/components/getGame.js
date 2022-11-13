@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
 
-const GetGame = ({game, api, user, madness, points}) => {
+const GetGame = ({game, api, user, madness}) => {
   	const [popup, setPopup] = useState(false)
 	const [teams, setTeams] = useState([])
 	const [prediction, setPrediction] = useState({
@@ -10,7 +10,7 @@ const GetGame = ({game, api, user, madness, points}) => {
 		looser: {},
 		userId: user._id,
 		madness: madness,
-		points: points,
+		points: 0,
 		_id: "mock"
 	});
 
@@ -27,12 +27,11 @@ const GetGame = ({game, api, user, madness, points}) => {
 
 	useEffect(() =>{
 		user.predictions.map(userPrediction => {
-			api.get(`/predictions/${userPrediction._id}`).then(res => {
+			api.get(`/predictions/${userPrediction}`).then(res => {
 				if (res.data[0] != null){
-					if (res.data[0].game === game._id ){
+					if (res.data[0].game === game._id ){						
 						if(res.data[0].madness === madness){
 							setPrediction(res.data[0])
-							console.log(res.data[0])
 						}
 					}
 				}
@@ -42,27 +41,28 @@ const GetGame = ({game, api, user, madness, points}) => {
 
 	function submitPrediction(){
 		api.get(`/predictions/find/${prediction._id}`).then( res => {
-			console.log(res.data[0])
 			if (res.data[0] != null){
-				console.log("es nulo")
 				api.post(`/predictions/update/${prediction._id}`, {
 					"userId": user._id, 
 					"winner": prediction.winner, 
 					"looser": prediction.looser, 
 					"madness": madness, 
+					"game": game._id,
 					"points": prediction.points}).then(res => {
 						setPrediction(res.data)
-			})}else{
+				})
+			}else{
 				api.post('predictions/new', {
 					"userId": user._id, 
 					"winner": prediction.winner, 
 					"looser": prediction.looser, 
 					"madness": madness, 
+					"game": game._id,
 					"points": prediction.points}).then(res => {
+						console.log(res.data)
 						setPrediction(res.data)
-					})
+				})
 			}
-			
 		})
 	};
 	return (
@@ -70,7 +70,7 @@ const GetGame = ({game, api, user, madness, points}) => {
 			<div>
 				<header>
 					<h2>{game.gameId} </h2>
-					<p>{game.date.substr(0,16)}</p>
+					<p>{new Date(game.date).toString().substr(0,33)}</p>
 				</header>
 				{teams.map(team =>
 					<div key = {team._id}>
@@ -87,14 +87,20 @@ const GetGame = ({game, api, user, madness, points}) => {
 									{teams.map(team =>
 									<div>
 										<label htmlFor={"winner"} > {team.name} </label>
-										<input type = "radio" name= "winner" id = {"winner"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, winner: team._id}))}}/>
+										{prediction.winner === team._id ? (
+											<input type = "radio" name= "winner" id = {"winner"} value={team._id} checked onChange={() => { setPrediction((prev) =>({...prev, winner: team._id}))}}/>):(
+											<input type = "radio" name= "winner" id = {"winner"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, winner: team._id}))}}/>)
+										}
 									</div>
 									)}
 								<h3> Set Looser </h3>
 									{teams.map(team =>
 									<div>
 										<label htmlFor={"looser"}> {team.name} </label>
-										<input type = "radio" name= "looser" id = {"looser"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, looser: team._id}))}}/>
+										{prediction.looser === team._id ? (
+											<input type = "radio" name= "looser" id = {"looser"} value={team._id} checked onChange={() => { setPrediction((prev) =>({...prev, looser: team._id}))}}/>):(
+											<input type = "radio" name= "looser" id = {"looser"} value={team._id} onChange={() => { setPrediction((prev) =>({...prev, looser: team._id}))}}/>)
+										}
 									</div>
 									)}
 								<button className= 'btnSmall' onClick={() => submitPrediction()}> Submit </button>

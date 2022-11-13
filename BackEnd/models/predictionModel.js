@@ -1,4 +1,7 @@
 import mongoose from "mongoose"
+import momentTimezone from 'moment';
+const standardDate = () => new Date();
+const localDate = momentTimezone(standardDate(),"America/Los_Angeles").format();
 
 const predictionSchema = new mongoose.Schema(
 	{
@@ -16,7 +19,7 @@ const predictionSchema = new mongoose.Schema(
     },
 	date: {
         type: Date, 
-        default: () => Date.now(),
+        default: localDate,
         // immutable: true  //Funciona como hash pero se tendria que crear otra instancia si el usuario cambia de prediccion
     },
 	userId: {type: mongoose.SchemaTypes.ObjectId},

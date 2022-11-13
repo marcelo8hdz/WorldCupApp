@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
+import momentTimezone from 'moment';
+import moment from 'moment';
 
-const SetGame = ({game, setGame, api, user}) => {
+
+const SetGame = ({game, api, user}) => {
   	const [popup, setPopup] = useState(false)
 	const [teams, setTeams] = useState([])
 	const [updatedGame, setUpdatedGame] = useState(game)
-	const [date, setDate] = useState(game.date.substr(0, 16))
 
 	function submitNewGame(){
+		// const arg =  () => momentTimezone(updatedGame.date,"America/Los_Angeles").format()
+		
+		// console.log(updatedGame.date, momentTimezone(updatedGame.date,"SCT").format(), arg())
+		
 		api.post(`/games/update/${game._id}`, updatedGame).then(res => {
-			setGame(res.data[0])
-			api.post(`/predictions/updatemany/${game._id}/${game.winner}`, {"points": 1})
+			setUpdatedGame(res.data[0])
+			setUpdatedGame(res.data[0])
 		})
+		api.post(`/predictions/updatemany/${game._id}/${updatedGame.winner}`, {"points": 3})
 		
 	};
 
@@ -23,8 +30,8 @@ const SetGame = ({game, setGame, api, user}) => {
 			})
 			
 		})
-		setTeams(arr)
-
+		setTeams(arr);
+		setPopup(false);
 	}, [])
 	
 	return (
@@ -32,10 +39,10 @@ const SetGame = ({game, setGame, api, user}) => {
 			<div>
 				<header>
 					<h2>{game.gameId} </h2>
-					<p>{game.date.substr(0,16)}</p>
+					<p>{new Date(updatedGame.date).toString().substr(0,33)}</p>
 				</header>
 				{teams.map(team =>
-					<div key = {team._id}>
+					<div key = {team._id} >
 						<img src= {team.pic} alt= "team image" width="30" height="20" />
 						<p> {team.name} </p>
 					</div>
@@ -48,7 +55,7 @@ const SetGame = ({game, setGame, api, user}) => {
 									{teams.map(team =>
 									<div>
 										<label htmlFor={"winner"}> {team.name} </label>
-										{game.winner === team._id ? (
+										{updatedGame.winner === team._id ? (
 										<input type = "radio" name= "winner" id = {"winner"} value={team._id} onChange={() => {setUpdatedGame((prev) =>({...prev, winner: team._id}))}} checked/>) :(
 										<input type = "radio" name= "winner" id = {"winner"} value={team._id} onChange={() => { setUpdatedGame((prev) =>({...prev, winner: team._id}))}}/>)}
 									</div>
@@ -57,7 +64,7 @@ const SetGame = ({game, setGame, api, user}) => {
 									{teams.map(team =>
 									<div>
 										<label htmlFor={"looser"}> {team.name} </label>
-										{game.looser === team._id ? (
+										{updatedGame.looser === team._id ? (
 										<input type = "radio" name= "looser" id = {"looser"} value={team._id} checked onChange={() => { setUpdatedGame((prev) =>({...prev, looser: team._id}))}}/>): (
 										<input type = "radio" name= "looser" id = {"looser"} value={team._id} onChange={() => { setUpdatedGame((prev) =>({...prev, looser: team._id}))}}/>)}
 										
@@ -66,14 +73,13 @@ const SetGame = ({game, setGame, api, user}) => {
 								<h3> Set Date </h3>
 									<div>
 										<label htmlFor = {"gameDate"}> Date: </label>
-										<input type = "datetime-local" name= "gameDate" id = {"gameDate"} defaultValue ={game.date.substr(0, 16)} onChange = {(newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value}))}}/>
+										<input type = "datetime-local" name= "gameDate" id = {"gameDate"} defaultValue ={updatedGame.date.substr(0, 16)} onChange = {(newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value}))}}/>
 										{/* (newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value}))} */}
 									</div>
 								<button className= 'btnSmall' onClick={() => submitNewGame()}> Submit </button>
 							</div>
 					</ClickAwayListener>
 				)}
-			
 		</div>
 	)
 }

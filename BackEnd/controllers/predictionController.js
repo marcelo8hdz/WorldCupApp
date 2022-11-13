@@ -28,8 +28,11 @@ predictionRoutes.route('/delete/:id').delete((req, res) => {
 
 predictionRoutes.route('/:id').get((req, res) => {
 	Predictions.find({_id: req.params.id}, (err, prediction) => {
-        if (err) res.status(500).json(err)
-        res.status(200).json(prediction);
+        if (err) {
+            res.status(200).json([]);
+        }else{
+            res.status(200).json(prediction);
+        }
     });
 })
 
@@ -49,19 +52,23 @@ predictionRoutes.route('/update/:id').post((req, res) => {
     )    
 })
 
-
+//gets {points: int} as req.body
 predictionRoutes.route('/updatemany/:game/:winner').post((req, res) => {
     Predictions.updateMany(req.params, req.body, {new: true},
         (err, prediction) => {
-            if (err)  res.status(500).json(err);
-            res.status(500).json(prediction);
+            if (err) {
+                res.status(500).json(err);
+            }else{
+                updateUsersPoints();
+                res.status(200).json(prediction);
+            }
         }
-    )
-    updateUsersPoints()
+    );
 })
 
 import Users from "../models/userModel.js"
 async function updateUsersPoints(){
+    console.log("Actualizando Puntos Usuarios")
     let users = await Users.find({})
     let count = 0
     for (let i = 0; i < users.length; i++){

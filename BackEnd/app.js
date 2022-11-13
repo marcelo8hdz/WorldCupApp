@@ -1,6 +1,16 @@
 import express from "express";
 import { connectDB } from "./dbMongoose.js";
 import cors from "cors";
+
+
+import moment from "moment";
+import momentTimezone from 'moment';
+import momentRange from 'moment';
+const standardDate = () => new Date();
+
+const localDate = momentTimezone(standardDate(),"America/Los_Angeles").format();
+console.log(localDate, standardDate())
+
 // const express = require('express')
 
 const app = express();
