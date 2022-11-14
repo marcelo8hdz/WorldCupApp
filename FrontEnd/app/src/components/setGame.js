@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
-import momentTimezone from 'moment';
-import moment from 'moment';
 
 
 const SetGame = ({game, api, user}) => {
@@ -10,15 +8,12 @@ const SetGame = ({game, api, user}) => {
 	const [updatedGame, setUpdatedGame] = useState(game)
 
 	function submitNewGame(){
-		// const arg =  () => momentTimezone(updatedGame.date,"America/Los_Angeles").format()
-		
-		// console.log(updatedGame.date, momentTimezone(updatedGame.date,"SCT").format(), arg())
 		
 		api.post(`/games/update/${game._id}`, updatedGame).then(res => {
 			setUpdatedGame(res.data[0])
 			setUpdatedGame(res.data[0])
 		})
-		api.post(`/predictions/updatemany/${game._id}/${updatedGame.winner}`, {"points": 3})
+		api.post(`/predictions/updatemany/${game._id}/${updatedGame.winner}`)
 		
 	};
 
