@@ -52,35 +52,26 @@ predictionRoutes.route('/update/:id').post((req, res) => {
     )    
 })
 
-//gets {points: int} as req.body
-predictionRoutes.route('/updatemany/:game/:winner/:madness').post((req, res) => {
-    Predictions.updateMany(req.params, req.body, {new: true},
-        (err, prediction) => {
-            if (err) {
-                res.status(500).json(err);
-            }else{
-                updateUsersPoints();
-                res.status(200).json(prediction);
-            }
-        }
-    );
-})
 
 import Users from "../models/userModel.js"
-async function updateUsersPoints(){
-    console.log("Actualizando Puntos Usuarios")
-    let users = await Users.find({})
-    let count = 0
-    for (let i = 0; i < users.length; i++){
-        count = 0
-        for (let j = 0; j < users[i].predictions.length; j++){
-            let prediction = await Predictions.findById(users[i].predictions[j].toString())
-            count += prediction.points
-        }
-        users[i].points = count
-        users[i].save()
+
+predictionRoutes.route('/updatemany/:game/:winner').post((req, res) => {
+    updateUsersPoints(req);
+})
+
+async function updateUsersPoints(req){
+    let preds = await Predictions.find({game: req.params.game, winner: req.params.winner});
+    let points = 0;
+    for (let i = 0; i < preds.length; i++){
+        let user =  await Users.findById(preds[i].userId.toString());
+        console.log(user)
+        points = user.points + preds[i].points;
+        user.points = points;
+        console.log(user)
+        user.save()
+        
+
     }
-    
 }
 
 async function updateUserPredictions(pred){
@@ -90,8 +81,5 @@ async function updateUserPredictions(pred){
     user.predictions = arr
     user.save()
 }
-
-
-
 
 export default predictionRoutes;

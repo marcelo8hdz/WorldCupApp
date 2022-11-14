@@ -10,7 +10,7 @@ const GetGame = ({game, api, user, madness}) => {
 		looser: {},
 		userId: user._id,
 		madness: madness,
-		points: 0,
+		points: 3,
 		_id: "mock"
 	});
 

@@ -6,37 +6,111 @@ app.listen(PORT,
 );
 
 
+// //CREATE ALL GROUPS (as matches) AND TEAMS
+// const standardDate = () => new Date();
 
-//
-// import Users from "./models/userModel.js"
-// import Predictions from "./models/predictionModel.js"
-// async function updateUsersPoints(){
-//     let users = await Users.find({})
-//     let count = 0
-    
-//     for (let i = 0; i < users.length; i++){
-//         console.log("ora")
-//         count = 0
-//         for (let j = 0; j < users[i].predictions.length; j++){
-//             let prediction = await Predictions.findById(users[i].predictions[j].toString())
-//             count += prediction.points
-//         }
-//         users[i].points = count
-//         users[i].save()
-//     }
-    
-// }
-// updateUsersPoints()
-// setTimeout(updateUsersPoints, 99999);
-
-
-// import Teams from "./models/teamModel.js";
 // import Games from "./models/gameModel.js";
 
 
 // //FALTAN LAS FECHAS EXACTAS
 
-// //CREATE ALL GROUPS (as matches) AND TEAMS
+
+// //Round of 16
+// const RoundfOf16AB = await Games.create({
+//     gameId: "RoundfOf16AB", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const RoundfOf16BA = await Games.create({
+//     gameId: "RoundfOf16BA", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const RoundfOf16CD = await Games.create({
+//     gameId: "RoundfOf16CD", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const RoundfOf16DC = await Games.create({
+//     gameId: "RoundfOf16DC", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const RoundfOf16EF = await Games.create({
+//     gameId: "RoundfOf16EF", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const RoundfOf16FE = await Games.create({
+//     gameId: "RoundfOf16FE", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const RoundfOf16GH = await Games.create({
+//     gameId: "RoundfOf16GH", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const RoundfOf16HG = await Games.create({
+//     gameId: "RoundfOf16HG", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// //QuaterFinals
+
+// const QuaterFinals1 = await Games.create({
+//     gameId: "QuaterFinals", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const QuaterFinals2 = await Games.create({
+//     gameId: "QuaterFinals", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const QuaterFinals3 = await Games.create({
+//     gameId: "QuaterFinals", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const QuaterFinals4 = await Games.create({
+//     gameId: "QuaterFinals", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// //SemiFinals
+
+// const SemiFinals1 = await Games.create({
+//     gameId: "SemiFinals", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// const SemiFinals2 = await Games.create({
+//     gameId: "SemiFinals", 
+//     teams: [],
+//     date: standardDate()
+// });
+
+// //Final
+
+// const Final = await Games.create({
+//     gameId: "Final", 
+//     teams: [],
+//     date: standardDate()
+// });
 
 // //Group A
 // const Qatar = await Teams.findOne({name: "Qatar", pic: "./teamsCrest/Qatar"});
