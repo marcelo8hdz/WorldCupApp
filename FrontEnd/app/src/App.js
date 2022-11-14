@@ -7,13 +7,20 @@ import Header from './components/header';
 import AdminPage from './components/adminPage';
 import GetGames from './components/getGames';
 import ClickAwayListener from 'react-click-away-listener';
-
+import Navbar from './components/Navbar';
+import {Route, Router, Routes} from 'react-router-dom';
+import Home from './components/pages/Home';
+import About from './components/pages/About';
+import Betting from './components/pages/Betting';
+import Ai from './components/pages/Ai.js';
 
 
 function App() {
 	const [user, setUser] = useState([]);
 	const [page, setPage] = useState(false)
 	const [adminPopUp, setAdminPopUp] = useState(false);
+	const [phasePopUP, setPhasePopUp] = useState(false);
+	const [madnessPopUP, setMadnessPopUp] = useState(false);
 
 	const api = axios.create({
 		baseURL: 'http://localhost:5000'
@@ -37,7 +44,7 @@ function App() {
 		setPage(true)
 	}
 
-  	useEffect(() => {
+	useEffect(() => {
 		/* global google*/
 		google.accounts.id.initialize({
 			client_id : "637511278285-tccv1tah44j4vigc8bc3gnmlkr5cg2rs.apps.googleusercontent.com",
@@ -51,38 +58,39 @@ function App() {
 
 	}, []);
 
- 
-  return (
-	
-	<div className = 'App'>
-		<Header user = {user} />
-		<div id="signInDiv"></div>
-		{page && (
-			<div>
-				<div className = "container">
-					<RankedUsers api = {api} user = {user}/>
-					<button className = 'btnSmall' >Madness</button>
-				</div>
-				<div className='container'> 
-					<GetGames api ={api} user = {user}></GetGames>
-				
-				</div>
-
-				
-				{user.admin && (
-					<div className='container'>
-						<header> 
-							<h1>Admin Page</h1>
-						</header>
-						<button className='btnSmall' onClick={() => setAdminPopUp(!adminPopUp)}> Modify Games</button>
-						{adminPopUp ? (<AdminPage user = {user} api = {api}/>):('')}
+	return (
+		
+		<div className = 'App'>
+			
+			<Header user = {user} />
+			<div id="signInDiv"></div>
+			{page && (
+				<div>
+					<div className = "container">
+						<RankedUsers api = {api} user = {user}/>
 					</div>
-				)}
-			</div>
-		)}
-	</div>
-	
-  );
+					<div className='container'> 
+						<button className='btnSmall' onClick={()=> {setPhasePopUp(!phasePopUP);setMadnessPopUp(false);}} >Phase Betting</button>
+						<button className='btnSmall' onClick={()=> {setMadnessPopUp(!madnessPopUP);setPhasePopUp(false)}}>Madness</button>
+						{phasePopUP ? (<GetGames user = {user} api ={api}/>):('')}
+						{madnessPopUP ? (<GetGames user = {user} api ={api}/>):('')}
+					</div>
+
+					
+					{user.admin && (
+						<div className='container'>
+							<header> 
+								<h1>Admin Page</h1>
+							</header>
+							<button className='btnSmall' onClick={() => setAdminPopUp(!adminPopUp)}> Modify Games</button>
+							{adminPopUp ? (<AdminPage user = {user} api = {api}/>):('')}
+						</div>
+					)}
+				</div>
+			)}
+		</div>
+		
+	);
 }
 
 export default App;
