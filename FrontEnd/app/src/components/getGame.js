@@ -23,7 +23,7 @@ const GetGame = ({game, api, user, madness}) => {
 			
 		})
 		setTeams(arr)
-	}, [])
+	}, []);
 
 	useEffect(() =>{
 		user.predictions.map(userPrediction => {
@@ -37,7 +37,7 @@ const GetGame = ({game, api, user, madness}) => {
 				}
 			})
 		})
-	}, [])
+	}, []);
 
 	function submitPrediction(){
 		api.get(`/predictions/find/${prediction._id}`).then( res => {
@@ -80,7 +80,7 @@ const GetGame = ({game, api, user, madness}) => {
 
 				)}
 				</div>
-				{popup && (
+				{popup &&(
 					<ClickAwayListener onClickAway={() => setPopup(false)}>
 							<div className={'popup'}>
 								<h3> Set Winner </h3>

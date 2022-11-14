@@ -35,13 +35,13 @@ body {
   align-items: center;
   margin-bottom: 5px;
   color: #fff;
-  background: rgb(86, 4, 44);
+  background:#56042C;
   
 }
 
 .btn {
   display: inline-flex;
-  background:  rgb(86, 4, 44);
+  background: #56042C;
   color: #fff;
   padding: 10px 20px;
   margin: 5px;
@@ -50,7 +50,7 @@ body {
   text-decoration: none;
   font-size: 15px;
   font-family: inherit;
-  min-height: 250px;
+  min-height: 230px;
 }
 
 .btnSmall {

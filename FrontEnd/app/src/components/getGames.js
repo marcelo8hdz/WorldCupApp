@@ -5,10 +5,10 @@ export default function GetGames({api, user}){
     const [games, getGames] = useState([])
 
     useEffect(() =>{
-        api.get('/games').then(res => {
+        api.get('/games/nextgames').then(res => {
             getGames(res.data)
         })
-    }, [])
+    }, []);
 
     return(
         <div>

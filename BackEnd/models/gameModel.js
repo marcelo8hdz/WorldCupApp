@@ -38,7 +38,7 @@ gameSchema.statics.getFinished = function(){
 }
 
 gameSchema.statics.getNextGames = function(){
-	return this.find({}).where('date').gt(Date.now()).sort('-date').limit(8);
+	return this.find({}).where('date').gt(Date.now()).sort('date').limit(10);
 }
 
 
