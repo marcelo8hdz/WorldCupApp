@@ -53,7 +53,7 @@ predictionRoutes.route('/update/:id').post((req, res) => {
 })
 
 //gets {points: int} as req.body
-predictionRoutes.route('/updatemany/:game/:winner').post((req, res) => {
+predictionRoutes.route('/updatemany/:game/:winner/:madness').post((req, res) => {
     Predictions.updateMany(req.params, req.body, {new: true},
         (err, prediction) => {
             if (err) {
