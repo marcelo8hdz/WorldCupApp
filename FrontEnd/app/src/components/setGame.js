@@ -60,7 +60,7 @@ const SetGame = ({game, api, user}) => {
 										<input type = "radio" name= "winner" id = {"winner"} value={team._id} onChange={() => { setUpdatedGame((prev) =>({...prev, winner: team._id}))}}/>)}
 									</div>
 									)}
-								<h3> Set Looser </h3>
+								<h3> Set Runner Up </h3>
 									{teams.map(team =>
 									<div>
 										<label htmlFor={"looser"}> {team.name} </label>
