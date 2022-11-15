@@ -8,12 +8,12 @@ const SetGame = ({game, api, user}) => {
 	const [updatedGame, setUpdatedGame] = useState(game)
 
 	function submitNewGame(){
-		
 		api.post(`/games/update/${game._id}`, updatedGame).then(res => {
 			setUpdatedGame(res.data[0])
-			setUpdatedGame(res.data[0])
 		})
-		api.post(`/predictions/updatemany/${game._id}/${updatedGame.winner}`)
+		if (updatedGame.winner != null){
+			api.post(`/predictions/updatemany/${game._id}/${updatedGame.winner}`)
+		}
 		
 	};
 
@@ -68,7 +68,7 @@ const SetGame = ({game, api, user}) => {
 								<h3> Set Date </h3>
 									<div>
 										<label htmlFor = {"gameDate"}> Date: </label>
-										<input type = "datetime-local" name= "gameDate" id = {"gameDate"} defaultValue ={updatedGame.date.substr(0, 16)} onChange = {(newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value}))}}/>
+										<input type = "datetime-local" name= "gameDate" id = {"gameDate"} defaultValue ={updatedGame.date.substr(0, 16)} onChange = {(newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value.substr(0,17)}))}}/>
 										{/* (newDate) => { setUpdatedGame((prev) =>({...prev, date: newDate.target.value}))} */}
 									</div>
 								<button className= 'btnSmall' onClick={() => submitNewGame()}> Submit </button>

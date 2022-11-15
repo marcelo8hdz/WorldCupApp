@@ -56,10 +56,15 @@ predictionRoutes.route('/update/:id').post((req, res) => {
 import Users from "../models/userModel.js"
 
 predictionRoutes.route('/updatemany/:game/:winner').post((req, res) => {
-    updateUsersPoints(req);
+    if (req.params.winner != null){
+        updateUsersPoints(req);
+    }
 })
 
 async function updateUsersPoints(req){
+    if (req.params.winner == null){
+        return;
+    }
     let preds = await Predictions.find({game: req.params.game, winner: req.params.winner});
     let points = 0;
     for (let i = 0; i < preds.length; i++){
