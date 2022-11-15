@@ -13,7 +13,7 @@ export default function GetGames({api, user}){
     return(
         <div>
             {games.map( game => (
-                <GetGame game = {game} api = {api} user = {user} madness = {false} />
+                <GetGame game = {game} api = {api} user = {user} madness = {false} points = {3}/>
             ))}
         </div>
     )

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
 
-const GetGame = ({game, api, user, madness}) => {
+const GetGame = ({game, api, user, madness, points}) => {
   	const [popup, setPopup] = useState(false)
 	const [teams, setTeams] = useState([])
 	const [prediction, setPrediction] = useState({
@@ -10,7 +10,7 @@ const GetGame = ({game, api, user, madness}) => {
 		looser: {},
 		userId: user._id,
 		madness: madness,
-		points: 3,
+		points: points,
 		_id: "mock"
 	});
 
