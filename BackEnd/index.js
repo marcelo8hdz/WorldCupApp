@@ -16,50 +16,50 @@ app.listen(PORT,
 
 
 // //Round of 16
-// const RoundfOf16AB = await Games.create({
-//     gameId: "RoundfOf16AB", 
+// const RoundOf16AB = await Games.create({
+//     gameId: "RoundOf16AB", 
 //     teams: [],
 //     date: standardDate()
 // });
 
-// const RoundfOf16BA = await Games.create({
-//     gameId: "RoundfOf16BA", 
+// const RoundOf16BA = await Games.create({
+//     gameId: "RoundOf16BA", 
 //     teams: [],
 //     date: standardDate()
 // });
 
-// const RoundfOf16CD = await Games.create({
-//     gameId: "RoundfOf16CD", 
+// const RoundOf16CD = await Games.create({
+//     gameId: "RoundOf16CD", 
 //     teams: [],
 //     date: standardDate()
 // });
 
-// const RoundfOf16DC = await Games.create({
-//     gameId: "RoundfOf16DC", 
+// const RoundOf16DC = await Games.create({
+//     gameId: "RoundOf16DC", 
 //     teams: [],
 //     date: standardDate()
 // });
 
-// const RoundfOf16EF = await Games.create({
-//     gameId: "RoundfOf16EF", 
+// const RoundOf16EF = await Games.create({
+//     gameId: "RoundOf16EF", 
 //     teams: [],
 //     date: standardDate()
 // });
 
-// const RoundfOf16FE = await Games.create({
-//     gameId: "RoundfOf16FE", 
+// const RoundOf16FE = await Games.create({
+//     gameId: "RoundOf16FE", 
 //     teams: [],
 //     date: standardDate()
 // });
 
-// const RoundfOf16GH = await Games.create({
-//     gameId: "RoundfOf16GH", 
+// const RoundOf16GH = await Games.create({
+//     gameId: "RoundOf16GH", 
 //     teams: [],
 //     date: standardDate()
 // });
 
-// const RoundfOf16HG = await Games.create({
-//     gameId: "RoundfOf16HG", 
+// const RoundOf16HG = await Games.create({
+//     gameId: "RoundOf16HG", 
 //     teams: [],
 //     date: standardDate()
 // });
