@@ -16,7 +16,7 @@ function App() {
 	const [madnessPopUP, setMadnessPopUp] = useState(false);
 
 	const api = axios.create({
-		baseURL: 'http://qatar-prediction.onrender.com'
+		baseURL: 'http://qatarprediction-api.onrender.com'
 	})
 
 	function handleCallbackResponse(res) {
