@@ -6,6 +6,7 @@ import RankedUsers from './components/userRankings';
 import Header from './components/header';
 import AdminPage from './components/adminPage';
 import GetGames from './components/getGames';
+import GetMadness from './components/getMadness';
 import ClickAwayListener from 'react-click-away-listener';
 import Navbar from './components/Navbar';
 import {Route, Router, Routes} from 'react-router-dom';
@@ -73,7 +74,7 @@ function App() {
 						<button className='btnSmall' onClick={()=> {setPhasePopUp(!phasePopUP);setMadnessPopUp(false);}} >Phase Betting</button>
 						<button className='btnSmall' onClick={()=> {setMadnessPopUp(!madnessPopUP);setPhasePopUp(false)}}>Madness</button>
 						{phasePopUP ? (<GetGames user = {user} api ={api}/>):('')}
-						{madnessPopUP ? (<GetGames user = {user} api ={api}/>):('')}
+						{madnessPopUP ? (<GetMadness user = {user} api ={api}/>):('')}
 					</div>
 
 					
