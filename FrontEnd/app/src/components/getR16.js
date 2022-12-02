@@ -58,8 +58,6 @@ export default function GetR16({api, user, groups, r16}){
 
     return(
         <div>
-            {roundof16.length}
-            {predictions.length}
             {(!pop) && (roundof16.map( game => (
                 <GetGame game = {game} api = {api} user = {user} madness = {true} points = {6}/>
             )))}

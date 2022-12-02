@@ -105,7 +105,11 @@ async function updatePlayOffGames(req){
     //Loop reads Ro16 and updates QF of 16
     for (let i = 0; i < arrR16.length; i++){
         if (req.params.id == arrR16[i]){
-            let game = await Games.findById(arrQF[i]);
+            if (i < arrQF.length / 2){
+                let game = await Games.findById(arrQF[i]);
+            }else{
+                let game = await Games.findById(arrQF[i - (arrQF.length / 2)]);
+            }
             let arr = game.teams;
             if (req.body.winner != null) {arr.push(req.body.winner);}
             game.teams = arr;
@@ -115,7 +119,11 @@ async function updatePlayOffGames(req){
     //Loop reads QF and updates SF of 16
     for (let i = 0; i < arrQF.length; i++){
         if (req.params.id == arrQF[i]){
-            let game = await Games.findById(arrSF[i]);
+            if (i < arrSF.length / 2){
+                let game = await Games.findById(arrSF[i]);
+            }else{
+                let game = await Games.findById(arrSF[i - (arrSF.length / 2)]);
+            }
             let arr = game.teams;
             if (req.body.winner != null) {arr.push(req.body.winner);}
             game.teams = arr;
