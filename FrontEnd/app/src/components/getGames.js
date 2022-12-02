@@ -2,11 +2,11 @@ import GetGame from './getGame'
 import { useState, useEffect } from 'react'
 
 export default function GetGames({api, user}){
-    const [games, getGames] = useState([])
+    const [games, setGames] = useState([])
 
     useEffect(() =>{
         api.get('/games/nextgames').then(res => {
-            getGames(res.data)
+            setGames(res.data)
         })
     }, []);
 
