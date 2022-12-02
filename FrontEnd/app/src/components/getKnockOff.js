@@ -45,16 +45,12 @@ export default function GetKnockOff({api, user, prevGames, currGames, points, ga
                 }
             })
         }
-        console.log('arg', arr)
         setCurrGames(arr)
     }
     
 
     return(
         <div>
-            {showGames.length}
-            {predictions.length}
-            
             {(!pop) && (showGames.map( game => (
                 <GetGame game = {game} api = {api} user = {user} madness = {true} points = {points}/>
             )))}

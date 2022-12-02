@@ -141,6 +141,11 @@ export default function GetMadness({api, user}){
                 <GetKnockOff api = {api} user = {user} prevGames = {qf} currGames = {sf} points = {24} gameCount = {2}/>
                 </div>
             )}
+            {(pop == 4 ) && (
+                <div>
+                <GetKnockOff api = {api} user = {user} prevGames = {sf} currGames = {final} points = {48} gameCount = {1}/>
+                </div>
+            )}
             <button className= 'btnSmall' onClick={() => next()}> Load Next </button>
         </div>
     )
